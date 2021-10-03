@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Characters;
 
 public class CharacterSelectItem : Control
 {
@@ -43,19 +44,22 @@ public class CharacterSelectItem : Control
         Connect("mouse_exited", this, "onMouseHover", new Godot.Collections.Array(false));
     }
 
-    public void LoadFrom(string filePath)
+    public void LoadFrom(string filePath, CharacterStyleComponentType? type)
     {
         this.filePath = filePath;
         var image = new Image();
         image.Load(filePath);
-        LoadFrom(CharacterStyleTexture.From(image));
+        LoadFrom(CharacterStyleTexture.From(image), type);
     }
 
-    public void LoadFrom(ImageTexture texture)
+    public void LoadFrom(ImageTexture texture, CharacterStyleComponentType? type)
     {
         textureRect = GetNode<TextureRect>("TextureRect");
         var t = (Texture)textureRect.Texture.Duplicate();
         t.Set("atlas", texture);
+        t.Set("region", type != CharacterStyleComponentType.Smartphones
+            ? new Rect2(new Vector2(1, 16), new Vector2(128, 50))
+            : new Rect2(new Vector2(1, 288), new Vector2(128, 50)));
         textureRect.Texture = t;
     }
 

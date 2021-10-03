@@ -51,7 +51,7 @@ public class PremadeBrowser : MarginContainer
         foreach (PremadeCharacterInfo premade in premadeCharacterManager.Search(searchParam))
         {
             var item = CharacterSelectItem.Instance();
-            item.LoadFrom(await CharacterStyleGenerator.GenerateImageTexture(premade.Styles));
+            item.LoadFrom(await CharacterStyleGenerator.GenerateImageTexture(premade.Styles), null);
             item.onSelect += (selected) =>
             {
                 foreach (var it in gridContainer.GetChildren())

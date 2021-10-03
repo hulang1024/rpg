@@ -126,7 +126,7 @@ public class CharacterComponentTabs : TabContainer
         foreach (string filePath in filePaths)
         {
             var item = CharacterSelectItem.Instance();
-            item.LoadFrom($"{filePath}");
+            item.LoadFrom($"{filePath}", tab.ComponentType);
 
             item.onSelect = (selected) =>
             {
