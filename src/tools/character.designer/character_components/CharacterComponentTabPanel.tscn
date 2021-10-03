@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/tools/character.designer/character_components/CharacterComponentTabPanel.cs" type="Script" id=1]
+
+[node name="CharacterComponentTabPanel" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 16.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
+columns = 5

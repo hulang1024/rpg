@@ -1,0 +1,291 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/tools/character.designer/premade_browser/PremadeBrowser.cs" type="Script" id=1]
+[ext_resource path="res://src/graphics/ui/RadioGroup.tscn" type="PackedScene" id=2]
+
+[node name="PremadeBrowser" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_top = 16.0
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/separation = 16
+
+[node name="SearchBar" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 24.0
+custom_constants/separation = 40
+
+[node name="GenderRadioGroup" parent="VBoxContainer/SearchBar" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 140.0
+margin_bottom = 24.0
+
+[node name="All" type="CheckBox" parent="VBoxContainer/SearchBar/GenderRadioGroup"]
+margin_right = 52.0
+margin_bottom = 24.0
+pressed = true
+text = "全部"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Male" type="CheckBox" parent="VBoxContainer/SearchBar/GenderRadioGroup"]
+margin_left = 56.0
+margin_right = 96.0
+margin_bottom = 24.0
+text = "男"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Female" type="CheckBox" parent="VBoxContainer/SearchBar/GenderRadioGroup"]
+margin_left = 100.0
+margin_right = 140.0
+margin_bottom = 24.0
+text = "女"
+
+[node name="IsKidRadioGroup" parent="VBoxContainer/SearchBar" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_right = 368.0
+margin_bottom = 24.0
+
+[node name="All" type="CheckBox" parent="VBoxContainer/SearchBar/IsKidRadioGroup"]
+margin_right = 52.0
+margin_bottom = 24.0
+pressed = true
+text = "全部"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Y" type="CheckBox" parent="VBoxContainer/SearchBar/IsKidRadioGroup"]
+margin_left = 56.0
+margin_right = 120.0
+margin_bottom = 24.0
+text = "是小孩"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="N" type="CheckBox" parent="VBoxContainer/SearchBar/IsKidRadioGroup"]
+margin_left = 124.0
+margin_right = 188.0
+margin_bottom = 24.0
+text = "非小孩"
+
+[node name="ItemTags" type="HBoxContainer" parent="VBoxContainer/SearchBar"]
+margin_left = 408.0
+margin_right = 676.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="VBoxContainer/SearchBar/ItemTags"]
+margin_top = 6.0
+margin_right = 24.0
+margin_bottom = 18.0
+text = "标签"
+
+[node name="TagsLineEdit" type="LineEdit" parent="VBoxContainer/SearchBar/ItemTags"]
+margin_left = 28.0
+margin_right = 228.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 200, 22 )
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="SearchButton" type="Button" parent="VBoxContainer/SearchBar/ItemTags"]
+margin_left = 232.0
+margin_right = 268.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 22 )
+text = "查询"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 1024.0
+margin_bottom = 584.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
+columns = 5
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+margin_top = 16.0
+margin_right = 80.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 80, 100 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/vseparation = 16
+items = [ "查看信息", null, 0, false, false, 1, 0, null, "", false, "删除", null, 0, false, false, 2, 0, null, "", false, "取消", null, 0, false, false, 0, 0, null, "", false ]
+
+[node name="PremadeInfoDialog" type="WindowDialog" parent="."]
+visible = true
+margin_top = 16.0
+margin_right = 300.0
+margin_bottom = 316.0
+rect_min_size = Vector2( 300, 300 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+window_title = "预制角色信息"
+
+[node name="MarginContainer" type="MarginContainer" parent="PremadeInfoDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PremadeInfoDialog/MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 284.0
+margin_bottom = 284.0
+custom_constants/separation = 12
+
+[node name="IdItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+margin_right = 268.0
+margin_bottom = 22.0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IdItem"]
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 64, 0 )
+text = "Id"
+
+[node name="LineEdit" type="LineEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IdItem"]
+margin_left = 68.0
+margin_right = 268.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+editable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IsKidItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 268.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 22 )
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 64, 0 )
+text = "是否小孩"
+
+[node name="IsKid" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
+margin_left = 68.0
+margin_top = 5.0
+margin_right = 268.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+
+[node name="GenderItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+margin_top = 68.0
+margin_right = 268.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 0, 22 )
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 64, 0 )
+text = "性别"
+
+[node name="Gender" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
+margin_left = 68.0
+margin_top = 5.0
+margin_right = 68.0
+margin_bottom = 17.0
+
+[node name="TagsItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+margin_top = 102.0
+margin_right = 268.0
+margin_bottom = 142.0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
+margin_top = 14.0
+margin_right = 64.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 64, 0 )
+text = "标签"
+
+[node name="TextEdit" type="TextEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
+margin_left = 68.0
+margin_right = 268.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+readonly = true
+
+[node name="RemarkItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+margin_top = 154.0
+margin_right = 268.0
+margin_bottom = 254.0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
+margin_top = 44.0
+margin_right = 64.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 64, 0 )
+text = "备注"
+
+[node name="TextEdit" type="TextEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
+margin_left = 68.0
+margin_right = 268.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+readonly = true
+
+[connection signal="text_changed" from="VBoxContainer/SearchBar/ItemTags/TagsLineEdit" to="." method="_on_TagsLineEdit_text_changed"]
+[connection signal="pressed" from="VBoxContainer/SearchBar/ItemTags/SearchButton" to="." method="_on_SearchButton_pressed"]
+[connection signal="id_pressed" from="PopupMenu" to="." method="_on_PopupMenu_id_pressed"]
+[connection signal="popup_hide" from="PopupMenu" to="." method="_on_PopupMenu_popup_hide"]

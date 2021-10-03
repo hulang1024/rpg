@@ -1,0 +1,204 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/tools/character.designer/PremadeForm.cs" type="Script" id=1]
+[ext_resource path="res://src/graphics/ui/RadioGroup.tscn" type="PackedScene" id=2]
+
+[node name="PremadeForm" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1008.0
+margin_bottom = 584.0
+custom_constants/separation = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_right = 992.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+text = "+"
+
+[node name="ItemId" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 992.0
+margin_bottom = 54.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemId"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 60, 0 )
+text = "Id"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ItemId"]
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+placeholder_text = "不填则自动生成"
+
+[node name="ItemSize" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 66.0
+margin_right = 992.0
+margin_bottom = 84.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemSize"]
+margin_top = 3.0
+margin_right = 60.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 60, 0 )
+text = "尺寸"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/ItemSize"]
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+text = "32x32"
+items = [ "48x48", null, true, 48, null, "32x32", null, false, 32, null, "16x16", null, true, 16, null ]
+selected = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemKid" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 992.0
+margin_bottom = 120.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemKid"]
+margin_top = 6.0
+margin_right = 60.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 60, 0 )
+text = "是否小孩"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ItemKid"]
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="ItemGender" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 132.0
+margin_right = 992.0
+margin_bottom = 156.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemGender"]
+margin_top = 6.0
+margin_right = 60.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 60, 0 )
+text = "性别"
+
+[node name="RadioGroup" parent="MarginContainer/VBoxContainer/ItemGender" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Male" type="CheckBox" parent="MarginContainer/VBoxContainer/ItemGender/RadioGroup"]
+margin_right = 40.0
+margin_bottom = 24.0
+pressed = true
+text = "男"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Female" type="CheckBox" parent="MarginContainer/VBoxContainer/ItemGender/RadioGroup"]
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 24.0
+text = "女"
+
+[node name="ItemTags" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 992.0
+margin_bottom = 190.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemTags"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 60, 0 )
+text = "标签"
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/ItemTags"]
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 22 )
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="ItemRemark" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 202.0
+margin_right = 992.0
+margin_bottom = 224.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRemark"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 60, 0 )
+text = "备注"
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/ItemRemark"]
+margin_left = 64.0
+margin_right = 992.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 22 )
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 236.0
+margin_right = 992.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 40, 24 )
+size_flags_horizontal = 3
+text = "保存"
+
+[node name="DeleteButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 272.0
+margin_right = 992.0
+margin_bottom = 296.0
+rect_min_size = Vector2( 0, 24 )
+text = "删除"
+
+[node name="Message" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_top = 308.0
+margin_right = 992.0
+margin_bottom = 320.0
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NewButton" to="." method="_on_NewButton_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/ItemSize/OptionButton" to="MarginContainer" method="_on_FrameSizeOptionButton_item_selected"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ItemKid/CheckBox" to="." method="_on_IsKidCheckBox_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/DeleteButton" to="." method="_on_DeleteButton_pressed"]
