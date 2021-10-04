@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://assets/character/Body_32x32_01.png" type="Texture" id=1]
 [ext_resource path="res://src/character/Character.cs" type="Script" id=2]
@@ -960,24 +960,22 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=65]
-extents = Vector2( 15, 22.653 )
+extents = Vector2( 16, 22.5728 )
+
+[sub_resource type="RectangleShape2D" id=66]
+extents = Vector2( 15.8648, 22.9543 )
 
 [node name="Character" type="KinematicBody2D"]
 script = ExtResource( 2 )
 InitialDir = 1
 InitialState = 0
-TypeNameBody = "Body_32x32_01"
-TypeNameOutfit = null
-TypeNameHairstyle = null
-TypeNameEyes = null
-TypeNameSmartphones = null
-TypeNameAccessories = null
+PremadeId = null
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 56
 vframes = 20
-frame = 56
+frame = 590
 region_enabled = true
 region_rect = Rect2( 0, 0, 1792, 1282 )
 
@@ -1051,5 +1049,11 @@ anims/walk_up = SubResource( 64 )
 visible = false
 position = Vector2( -1, 9 )
 shape = SubResource( 65 )
+
+[node name="BodyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea"]
+position = Vector2( -1, 9 )
+shape = SubResource( 66 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="On_AnimationPlayer_animation_finished"]

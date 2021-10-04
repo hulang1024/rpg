@@ -9,4 +9,11 @@ public sealed class Textures
         texture.Flags = (int)Texture.FlagsEnum.Mipmaps;
         return texture;
     }
+
+    public static ImageTexture From(string path)
+    {
+        var image = new Image();
+        image.Load(path);
+        return From(image);
+    }
 }

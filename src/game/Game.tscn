@@ -1,17 +1,33 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/game/Game.cs" type="Script" id=1]
 [ext_resource path="res://src/character/PlayerCharacterController.cs" type="Script" id=2]
 [ext_resource path="res://src/character/Character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ordinary_objects/doors/door/Door.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="PlayerCharacterController" type="Node2D" parent="."]
-position = Vector2( 64, 64 )
+[node name="YSort" type="YSort" parent="."]
+
+[node name="PlayerCharacterController" type="Node2D" parent="YSort"]
+position = Vector2( 75, 84 )
 script = ExtResource( 2 )
 
-[node name="PlayerCharacter" parent="." instance=ExtResource( 3 )]
-position = Vector2( 736, 160 )
-InitialDir = 3
-PremadeId = "0"
+[node name="PlayerCharacter" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 176, 100 )
+InitialDir = 0
+InitialState = 1
+PremadeId = "2"
+
+[node name="Door2" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 177, 20 )
+
+[node name="Door3" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 245, 25 )
+NowState = 0
+StyleId = 6
+
+[node name="Door" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 91, 42 )
+StyleId = 4

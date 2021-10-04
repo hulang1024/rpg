@@ -1,6 +1,8 @@
 using Godot;
 using static Godot.GD;
 using System;
+using OrdinaryObjects;
+using InventorySystem;
 
 namespace Characters
 {
@@ -96,6 +98,26 @@ namespace Characters
             else if (@event.IsActionPressed("character_grab_gun"))
             {
                 NowState = State.GrabGun;
+            }
+            else if (@event.IsActionPressed("gameplay_toggle_door"))
+            {
+                var door = character.ActionObjects.Find(o => o is Door);
+                (door as Door)?.Toggle(character);
+            }
+            else if (@event.IsActionPressed("gameplay_toggle_lock"))
+            {
+                var door = character.ActionObjects.Find(o => o is Door);
+                if (door != null)
+                {
+                    /*
+                    var keyItem = (InventoryItem)character.Inventory.Items
+                        .Find(item => item.ObjectType == ItemObjectType.LockKey);
+                    if (keyItem != null)
+                    {
+                        (door as Door)?.ToggleLock(character, null);
+                    }*/
+                    (door as Door)?.ToggleLock(character, null);
+                }
             }
         }
     }

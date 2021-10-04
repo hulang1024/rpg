@@ -8,27 +8,33 @@ namespace Characters
     {
         public bool Preview;
 
+        private Dir initialDir;
         public Dir InitialDir
         {
-            get { return dir; }
+            get { return initialDir; }
             set
             {
+                initialDir = value;
                 dir = value;
-                
                 if (Engine.EditorHint)
                 {
                     playAnimation();
-                    PropertyListChangedNotify();
                 }
             }
         }
 
+        private State initialState;
         public State InitialState
         {
-            get { return NowState; }
+            get { return initialState; }
             set
             {
+                initialState = value;
                 NowState = value;
+                if (Engine.EditorHint)
+                {
+                    playAnimation();
+                }
             }
         }
 

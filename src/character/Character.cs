@@ -1,6 +1,8 @@
 using Godot;
 using static Godot.GD;
 using System;
+using System.Collections.Generic;
+using InventorySystem;
 
 namespace Characters
 {
@@ -82,12 +84,16 @@ namespace Characters
 
         private Vector2 velocity = Vector2.Zero;
 
+        public Inventory Inventory = new Inventory();
+
+        public List<Node> ActionObjects = new List<Node>();
+
         public override void _Ready()
         {
             sprite = GetNode<Sprite>("Sprite");
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            initBody();
             LoadPremadeCharacterStyle();
-
             WalkSpeed = 1f;
         }
 
