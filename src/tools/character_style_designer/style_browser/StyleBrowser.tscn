@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/tools/character.designer/premade_browser/PremadeBrowser.cs" type="Script" id=1]
+[ext_resource path="res://src/tools/character_style_designer/style_browser/StyleBrowser.cs" type="Script" id=1]
 [ext_resource path="res://src/graphics/ui/RadioGroup.tscn" type="PackedScene" id=2]
 
-[node name="PremadeBrowser" type="MarginContainer"]
+[node name="StyleBrowser" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_top = 16
@@ -135,8 +135,7 @@ size_flags_vertical = 0
 custom_constants/vseparation = 16
 items = [ "查看信息", null, 0, false, false, 1, 0, null, "", false, "删除", null, 0, false, false, 2, 0, null, "", false, "取消", null, 0, false, false, 0, 0, null, "", false ]
 
-[node name="PremadeInfoDialog" type="WindowDialog" parent="."]
-visible = true
+[node name="StyleInfoDialog" type="WindowDialog" parent="."]
 margin_top = 16.0
 margin_right = 300.0
 margin_bottom = 316.0
@@ -145,7 +144,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 window_title = "预制角色信息"
 
-[node name="MarginContainer" type="MarginContainer" parent="PremadeInfoDialog"]
+[node name="MarginContainer" type="MarginContainer" parent="StyleInfoDialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 16
@@ -156,14 +155,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PremadeInfoDialog/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StyleInfoDialog/MarginContainer"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 284.0
 margin_bottom = 284.0
 custom_constants/separation = 12
 
-[node name="IdItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+[node name="IdItem" type="HBoxContainer" parent="StyleInfoDialog/MarginContainer/VBoxContainer"]
 margin_right = 268.0
 margin_bottom = 22.0
 size_flags_vertical = 0
@@ -171,14 +170,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IdItem"]
+[node name="Label" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/IdItem"]
 margin_top = 5.0
 margin_right = 64.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 64, 0 )
 text = "Id"
 
-[node name="LineEdit" type="LineEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IdItem"]
+[node name="LineEdit" type="LineEdit" parent="StyleInfoDialog/MarginContainer/VBoxContainer/IdItem"]
 margin_left = 68.0
 margin_right = 268.0
 margin_bottom = 22.0
@@ -189,7 +188,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IsKidItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+[node name="IsKidItem" type="HBoxContainer" parent="StyleInfoDialog/MarginContainer/VBoxContainer"]
 margin_top = 34.0
 margin_right = 268.0
 margin_bottom = 56.0
@@ -199,21 +198,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
+[node name="Label" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
 margin_top = 5.0
 margin_right = 64.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 64, 0 )
 text = "是否小孩"
 
-[node name="IsKid" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
+[node name="IsKid" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/IsKidItem"]
 margin_left = 68.0
 margin_top = 5.0
 margin_right = 268.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 
-[node name="GenderItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+[node name="GenderItem" type="HBoxContainer" parent="StyleInfoDialog/MarginContainer/VBoxContainer"]
 margin_top = 68.0
 margin_right = 268.0
 margin_bottom = 90.0
@@ -223,20 +222,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
+[node name="Label" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
 margin_top = 5.0
 margin_right = 64.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 64, 0 )
 text = "性别"
 
-[node name="Gender" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
+[node name="Gender" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/GenderItem"]
 margin_left = 68.0
 margin_top = 5.0
 margin_right = 68.0
 margin_bottom = 17.0
 
-[node name="TagsItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+[node name="TagsItem" type="HBoxContainer" parent="StyleInfoDialog/MarginContainer/VBoxContainer"]
 margin_top = 102.0
 margin_right = 268.0
 margin_bottom = 142.0
@@ -245,14 +244,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
+[node name="Label" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
 margin_top = 14.0
 margin_right = 64.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 64, 0 )
 text = "标签"
 
-[node name="TextEdit" type="TextEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
+[node name="TextEdit" type="TextEdit" parent="StyleInfoDialog/MarginContainer/VBoxContainer/TagsItem"]
 margin_left = 68.0
 margin_right = 268.0
 margin_bottom = 40.0
@@ -261,7 +260,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 readonly = true
 
-[node name="RemarkItem" type="HBoxContainer" parent="PremadeInfoDialog/MarginContainer/VBoxContainer"]
+[node name="RemarkItem" type="HBoxContainer" parent="StyleInfoDialog/MarginContainer/VBoxContainer"]
 margin_top = 154.0
 margin_right = 268.0
 margin_bottom = 254.0
@@ -270,14 +269,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
+[node name="Label" type="Label" parent="StyleInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
 margin_top = 44.0
 margin_right = 64.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 64, 0 )
 text = "备注"
 
-[node name="TextEdit" type="TextEdit" parent="PremadeInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
+[node name="TextEdit" type="TextEdit" parent="StyleInfoDialog/MarginContainer/VBoxContainer/RemarkItem"]
 margin_left = 68.0
 margin_right = 268.0
 margin_bottom = 100.0

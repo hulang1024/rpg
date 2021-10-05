@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 
 namespace Characters
 {
-    public class PremadeCharacterManager
+    public class CharacterStyleManager
     {
-        private readonly string file_path = $"{OS.GetUserDataDir()}/premade_characters.json";
-        private List<PremadeCharacterInfo> allPremadeCharacters;
-        public List<PremadeCharacterInfo> AllPremadeCharacters
+        private readonly string file_path = $"{OS.GetUserDataDir()}/character_styles.json";
+        private List<CharacterStyleInfo> allStyles;
+        public List<CharacterStyleInfo> AllStyles
         {
-            get { return allPremadeCharacters; }
+            get { return allStyles; }
         }
 
         private bool loaded = false;
@@ -24,13 +24,13 @@ namespace Characters
             {
                 reader = System.IO.File.OpenText(file_path);
                 string json = reader.ReadToEnd();
-                allPremadeCharacters = JsonConvert.DeserializeObject<List<PremadeCharacterInfo>>(json);
+                allStyles = JsonConvert.DeserializeObject<List<CharacterStyleInfo>>(json);
                 loaded = true;
                 return 0;
             }
             catch (System.IO.FileNotFoundException)
             {
-                allPremadeCharacters = new List<PremadeCharacterInfo>();
+                allStyles = new List<CharacterStyleInfo>();
                 return 1;
             }
             finally
@@ -39,16 +39,16 @@ namespace Characters
             }
         }
 
-        public PremadeCharacterInfo FindById(string id)
+        public CharacterStyleInfo FindById(string id)
         {
             LoadAll(false);
-            return allPremadeCharacters.Find(item => item.Id == id);
+            return allStyles.Find(item => item.Id == id);
         }
 
-        public List<PremadeCharacterInfo> Search(PremadeSearchParam param)
+        public List<CharacterStyleInfo> Search(CharacterStyleSearchParam param)
         {
             LoadAll();
-            var items = allPremadeCharacters;
+            var items = allStyles;
             if (param.Gender != null)
             {
                 items = items.FindAll(item => item.Gender == param.Gender);
@@ -64,48 +64,48 @@ namespace Characters
             return items;
         }
     
-        public int Add(PremadeCharacterInfo premade)
+        public int Add(CharacterStyleInfo styleInfo)
         {
             LoadAll();
-            if (allPremadeCharacters.Exists(ch => ch.Equals(premade)))
+            if (allStyles.Exists(ch => ch.Equals(styleInfo)))
             {
                 return 2;
             }
-            if (string.IsNullOrEmpty(premade.Id))
+            if (string.IsNullOrEmpty(styleInfo.Id))
             {
-                premade.Id = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString("X");
+                styleInfo.Id = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString("X");
             }
-            else if (premade.Id.IndexOf(",") != -1)
+            else if (styleInfo.Id.IndexOf(",") != -1)
             {
                 return 4;
             }
 
-            if (allPremadeCharacters.Exists(ch => ch.Id == premade.Id))
+            if (allStyles.Exists(ch => ch.Id == styleInfo.Id))
             {
                 return 3;
             }
-            allPremadeCharacters.Add(premade);
+            allStyles.Add(styleInfo);
 
             return Save();
         }
 
-        public int Update(string id, PremadeCharacterInfo premade)
+        public int Update(string id, CharacterStyleInfo styleInfo)
         {
             LoadAll();
-            var oldPremade = allPremadeCharacters.Find(ch => ch.Id == id);
-            if (oldPremade == null)
+            var oldStyleInfo = allStyles.Find(ch => ch.Id == id);
+            if (oldStyleInfo == null)
                 return 1;
-            if (id != premade.Id)
+            if (id != styleInfo.Id)
             {
-                oldPremade.OldIds = string.IsNullOrEmpty(oldPremade.OldIds)
-                    ? oldPremade.Id
-                    : oldPremade.OldIds + "," + oldPremade.Id;
-                oldPremade.Id = premade.Id;
+                oldStyleInfo.OldIds = string.IsNullOrEmpty(oldStyleInfo.OldIds)
+                    ? oldStyleInfo.Id
+                    : oldStyleInfo.OldIds + "," + oldStyleInfo.Id;
+                oldStyleInfo.Id = styleInfo.Id;
             }
-            oldPremade.Styles = premade.Styles;
-            oldPremade.Gender = premade.Gender;
-            oldPremade.Tags = premade.Tags;
-            oldPremade.Remark = premade.Remark;
+            oldStyleInfo.Styles = styleInfo.Styles;
+            oldStyleInfo.Gender = styleInfo.Gender;
+            oldStyleInfo.Tags = styleInfo.Tags;
+            oldStyleInfo.Remark = styleInfo.Remark;
 
             return Save();
         }
@@ -113,7 +113,7 @@ namespace Characters
         public int Delete(string id)
         {
             LoadAll();
-            if (allPremadeCharacters.RemoveAll(t => t.Id == id) > 0)
+            if (allStyles.RemoveAll(t => t.Id == id) > 0)
                 return Save();
             return 1;
         }
@@ -123,7 +123,7 @@ namespace Characters
             var jsonSetting = new JsonSerializerSettings();
             jsonSetting.NullValueHandling = NullValueHandling.Ignore;
             jsonSetting.Formatting = Formatting.Indented;
-            var json = JsonConvert.SerializeObject(allPremadeCharacters, jsonSetting);
+            var json = JsonConvert.SerializeObject(allStyles, jsonSetting);
             System.IO.File.WriteAllText(file_path, json);
             return 0;
         }

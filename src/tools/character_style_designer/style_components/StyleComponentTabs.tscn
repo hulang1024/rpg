@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/tools/character.designer/character_components/CharacterComponentTabs.cs" type="Script" id=1]
+[ext_resource path="res://src/tools/character_style_designer/style_components/StyleComponentTabs.cs" type="Script" id=1]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
-[node name="CharacterComponentTabs" type="TabContainer"]
+[node name="StyleComponentTabs" type="TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 8.0

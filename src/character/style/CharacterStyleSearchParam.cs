@@ -1,7 +1,7 @@
 using System;
 using Characters;
 
-public class PremadeSearchParam
+public class CharacterStyleSearchParam
 {
     public string Id;
     public Gender? Gender;

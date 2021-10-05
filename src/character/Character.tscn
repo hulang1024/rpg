@@ -969,7 +969,7 @@ extents = Vector2( 15.8648, 22.9543 )
 script = ExtResource( 2 )
 InitialDir = 1
 InitialState = 0
-PremadeId = null
+StyleId = null
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

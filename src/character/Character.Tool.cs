@@ -38,14 +38,14 @@ namespace Characters
             }
         }
 
-        private string premadeId;
-        public string PremadeId
+        private string styleId;
+        public string StyleId
         {
-            get { return premadeId; }
+            get { return styleId; }
             set
             {
-                premadeId = value;
-                LoadPremadeCharacterStyle();
+                styleId = value;
+                LoadCharacterStyle();
             }
         }
 
@@ -70,28 +70,28 @@ namespace Characters
                     { "type", Variant.Type.Int }
                 },
                 new Dictionary<string, dynamic> {
-                    { "name", "PremadeId" },
+                    { "name", "StyleId" },
                     { "type", Variant.Type.String }
                 },
             });
         }
 
-        public void LoadPremadeCharacterStyle()
+        public void LoadCharacterStyle()
         {
-            if (string.IsNullOrEmpty(premadeId))
+            if (string.IsNullOrEmpty(styleId))
             {
                 return;
             }
-            var premadeCharacterManager = new PremadeCharacterManager();
-            var premade = premadeCharacterManager.FindById(premadeId);
-            if (premade != null)
+            var styleManager = new CharacterStyleManager();
+            var styleInfo = styleManager.FindById(styleId);
+            if (styleInfo != null)
             {
-                UpdateCharacterStyle(premade.Styles);
+                UpdateCharacterStyle(styleInfo.Styles);
             }
             else
             {
                 UpdateCharacterStyle(new CharacterStyleSpecifics());
-                GD.Print($"未找到Id为{premadeId}的预制角色");
+                GD.Print($"未找到Id为{styleId}的角色样式");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Characters
                 this.styleSpecifics = styleSpecificsToOverride;
             }
             
-            var sheetTexture = await CharacterStyleGenerator.GenerateImageTexture(styleSpecifics);
+            var sheetTexture = await CharacterStyleImageGenerator.GenerateImageTexture(styleSpecifics);
             animationPlayer.Stop(false);
             sprite.Texture = sheetTexture;
             playAnimation();

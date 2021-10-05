@@ -22,7 +22,7 @@ namespace Characters
         {
             var character = Generate();
             var characterSprite = character.GetNode<Sprite>("Sprite");
-            characterSprite.Texture = await CharacterStyleGenerator.GenerateImageTexture(specifics);
+            characterSprite.Texture = await CharacterStyleImageGenerator.GenerateImageTexture(specifics);
 
             return character;
         }

@@ -7,7 +7,7 @@ namespace Characters
         Female
     }
 
-    public class PremadeCharacterInfo
+    public class CharacterStyleInfo
     {
         public string Id = null;
         public CharacterStyleSpecifics Styles = new CharacterStyleSpecifics();
@@ -18,8 +18,8 @@ namespace Characters
 
         public override bool Equals(object obj)
         {
-            if (!(obj is PremadeCharacterInfo)) return false;
-            var other = (PremadeCharacterInfo)obj;
+            if (!(obj is CharacterStyleInfo)) return false;
+            var other = (CharacterStyleInfo)obj;
             return this.Styles.Equals(other.Styles)
                 && this.Gender == other.Gender
                 && this.Tags == other.Tags

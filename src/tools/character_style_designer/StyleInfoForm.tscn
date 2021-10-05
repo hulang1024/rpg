@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/tools/character.designer/PremadeForm.cs" type="Script" id=1]
+[ext_resource path="res://src/tools/character_style_designer/StyleInfoForm.cs" type="Script" id=1]
 [ext_resource path="res://src/graphics/ui/RadioGroup.tscn" type="PackedScene" id=2]
 
-[node name="PremadeForm" type="Panel"]
+[node name="StyleInfoForm" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Characters
 {
-    public class CharacterStyleGenerator
+    public class CharacterStyleImageGenerator
     {
         private const string BASE_PATH = "user://res/character";
 

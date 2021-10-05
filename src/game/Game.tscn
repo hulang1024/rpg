@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/game/Game.cs" type="Script" id=1]
-[ext_resource path="res://src/character/PlayerCharacterController.cs" type="Script" id=2]
+[ext_resource path="res://src/controller/PlayerCharacterController.cs" type="Script" id=2]
 [ext_resource path="res://src/character/Character.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ordinary_objects/doors/door/Door.tscn" type="PackedScene" id=4]
 
@@ -15,19 +15,20 @@ position = Vector2( 75, 84 )
 script = ExtResource( 2 )
 
 [node name="PlayerCharacter" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 176, 100 )
+position = Vector2( 177, 150 )
 InitialDir = 0
 InitialState = 1
-PremadeId = "2"
+StyleId = "2"
 
 [node name="Door2" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 177, 20 )
+position = Vector2( 177, 60 )
 
 [node name="Door3" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 245, 25 )
+position = Vector2( 245, 65 )
 NowState = 0
 StyleId = 6
 
 [node name="Door" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 91, 42 )
+NowLockState = 1
 StyleId = 4

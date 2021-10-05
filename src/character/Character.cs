@@ -93,7 +93,7 @@ namespace Characters
             sprite = GetNode<Sprite>("Sprite");
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
             initBody();
-            LoadPremadeCharacterStyle();
+            LoadCharacterStyle();
             WalkSpeed = 1f;
         }
 
