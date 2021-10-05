@@ -169,7 +169,7 @@ namespace Tools.CharacterStyleDesigner
                     styleInfoForm.Message.Text = "保存失败！";
                     break;
                 case 2:
-                    styleInfoForm.Message.Text = "此角色配置已存在！";
+                    styleInfoForm.Message.Text = "此样式配置已存在！";
                     break;
                 case 3:
                     styleInfoForm.Message.Text = "ID重复！";

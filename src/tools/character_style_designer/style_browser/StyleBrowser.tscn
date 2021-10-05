@@ -142,7 +142,7 @@ margin_bottom = 316.0
 rect_min_size = Vector2( 300, 300 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-window_title = "预制角色信息"
+window_title = "预制样式信息"
 
 [node name="MarginContainer" type="MarginContainer" parent="StyleInfoDialog"]
 anchor_right = 1.0
