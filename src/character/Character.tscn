@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://assets/character/Body_32x32_01.png" type="Texture" id=1]
 [ext_resource path="res://src/character/Character.cs" type="Script" id=2]
@@ -960,22 +960,27 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=65]
-extents = Vector2( 16, 22.5728 )
+extents = Vector2( 14, 6 )
 
 [sub_resource type="RectangleShape2D" id=66]
-extents = Vector2( 15.8648, 22.9543 )
+extents = Vector2( 16, 13 )
+
+[sub_resource type="RectangleShape2D" id=67]
+extents = Vector2( 16, 24 )
 
 [node name="Character" type="KinematicBody2D"]
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
 InitialDir = 1
-InitialState = 0
-StyleId = null
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 56
 vframes = 20
-frame = 590
+frame = 74
 region_enabled = true
 region_rect = Rect2( 0, 0, 1792, 1282 )
 
@@ -1045,15 +1050,22 @@ anims/walk_left = SubResource( 62 )
 anims/walk_right = SubResource( 63 )
 anims/walk_up = SubResource( 64 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( -1, 9 )
+[node name="LowerBodyCollisionShape" type="CollisionShape2D" parent="."]
+modulate = Color( 0.0392157, 0.113725, 0.941176, 1 )
+position = Vector2( 0, 25 )
 shape = SubResource( 65 )
 
+[node name="HeadArea" type="Area2D" parent="."]
+collision_layer = 524289
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadArea"]
+shape = SubResource( 66 )
+
 [node name="BodyArea" type="Area2D" parent="."]
+collision_layer = 524289
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea"]
-position = Vector2( -1, 9 )
-shape = SubResource( 66 )
+position = Vector2( 0, 8 )
+shape = SubResource( 67 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="On_AnimationPlayer_animation_finished"]

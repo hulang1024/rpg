@@ -101,13 +101,13 @@ namespace Characters
             }
             else if (@event.IsActionPressed("gameplay_toggle_door"))
             {
-                var door = character.ActionObjects.Find(o => o is Door);
-                (door as Door)?.Toggle(character);
+                var doorHandle = character.ActionObjects.Find(o => o is DoorHandle);
+                (doorHandle as DoorHandle)?.Toggle();
             }
             else if (@event.IsActionPressed("gameplay_toggle_lock"))
             {
-                var door = character.ActionObjects.Find(o => o is Door);
-                if (door != null)
+                var doorHandle = character.ActionObjects.Find(o => o is DoorHandle);
+                if (doorHandle != null)
                 {
                     /*
                     var keyItem = (InventoryItem)character.Inventory.Items
@@ -116,7 +116,7 @@ namespace Characters
                     {
                         (door as Door)?.ToggleLock(character, null);
                     }*/
-                    (door as Door)?.ToggleLock(character, null);
+                    (doorHandle as DoorHandle)?.ToggleLock(null);
                 }
             }
         }

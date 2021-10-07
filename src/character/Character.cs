@@ -86,7 +86,7 @@ namespace Characters
 
         public Inventory Inventory = new Inventory();
 
-        public List<Node> ActionObjects = new List<Node>();
+        public List<ActionableObject> ActionObjects = new List<ActionableObject>();
 
         public override void _Ready()
         {

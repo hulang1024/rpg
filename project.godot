@@ -18,6 +18,12 @@ config/icon="res://icon.png"
 
 shapes/collision/shape_color=Color( 1, 1, 1, 0.419608 )
 
+[display]
+
+window/size/test_width=1024
+window/size/test_height=600
+window/stretch/mode="2d"
+
 [global]
 
 window=false
@@ -148,6 +154,8 @@ gameplay_toggle_lock={
 
 [layer_names]
 
+2d_physics/layer_2="background"
+2d_physics/layer_19="inside"
 2d_physics/layer_20="character"
 
 [physics]

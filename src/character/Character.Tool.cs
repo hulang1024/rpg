@@ -8,7 +8,8 @@ namespace Characters
     {
         public bool Preview;
 
-        private Dir initialDir;
+        private Dir initialDir = Dir.Down;
+        [Export]
         public Dir InitialDir
         {
             get { return initialDir; }
@@ -24,6 +25,7 @@ namespace Characters
         }
 
         private State initialState;
+        [Export]
         public State InitialState
         {
             get { return initialState; }
@@ -39,6 +41,7 @@ namespace Characters
         }
 
         private string styleId;
+        [Export]
         public string StyleId
         {
             get { return styleId; }
@@ -50,31 +53,6 @@ namespace Characters
         }
 
         private CharacterStyleSpecifics styleSpecifics = new CharacterStyleSpecifics();
-        
-
-        public override Godot.Collections.Array _GetPropertyList()
-        {
-            return new Godot.Collections.Array(new Dictionary<string, dynamic>[] {
-                new Dictionary<string, dynamic> {
-                    { "name", "角色设计" },
-                    { "type", Variant.Type.Nil },
-                    { "usage", PropertyUsageFlags.Category | PropertyUsageFlags.ScriptVariable }
-                },
-
-                new Dictionary<string, dynamic> {
-                    { "name", "InitialDir" },
-                    { "type", Variant.Type.Int }
-                },
-                new Dictionary<string, dynamic> {
-                    { "name", "InitialState" },
-                    { "type", Variant.Type.Int }
-                },
-                new Dictionary<string, dynamic> {
-                    { "name", "StyleId" },
-                    { "type", Variant.Type.String }
-                },
-            });
-        }
 
         public void LoadCharacterStyle()
         {
@@ -91,7 +69,7 @@ namespace Characters
             else
             {
                 UpdateCharacterStyle(new CharacterStyleSpecifics());
-                GD.Print($"未找到Id为{styleId}的角色样式");
+                GD.PrintErr($"未找到Id为{styleId}的角色样式");
             }
         }
 

@@ -1,17 +1,15 @@
 using Godot;
 using static Godot.GD;
-using Characters;
 using System.Collections.Generic;
 
 namespace OrdinaryObjects
 {
-    [Tool]
-    public class Door : StaticBody2D
+    public abstract class Door : StaticBody2D
     {
         public enum State { Opened, Opening, Closing, Closed }
-        public enum LockState { /*Unlocking,*/NotLocked, /*Locking,*/ Locked };
+        public enum LockState { /*Unlocking,*/ NotLocked, /*Locking,*/ Locked };
 
-        private State state = State.Closed;
+        protected State state = State.Closed;
         [Export]
         public State NowState
         {
@@ -31,7 +29,7 @@ namespace OrdinaryObjects
             }
         }
 
-        private LockState lockState = LockState.NotLocked;
+        protected LockState lockState = LockState.NotLocked;
         [Export]
         public LockState NowLockState
         {
@@ -51,7 +49,7 @@ namespace OrdinaryObjects
             }
         }
 
-        private int styleId = 1;
+        protected int styleId = 1;
         [Export]
         public int StyleId
         {
@@ -59,7 +57,10 @@ namespace OrdinaryObjects
             set
             {
                 styleId = value;
-                preloadSpriteTextures();
+                if (sprite != null)
+                {
+                    preloadSpriteTextures();
+                }
                 if (Engine.EditorHint)
                 {
                     playAnimation();
@@ -67,15 +68,12 @@ namespace OrdinaryObjects
             }
         }
 
-        private ItemLock itemLock = ItemLockKeyGenerator.CreateLock();
+        protected ItemLock itemLock = ItemLockKeyGenerator.CreateLock();
 
-        private List<Node> Holders = new List<Node>();
-        private int obstacleCount = 0;
+        protected List<Node> obstacles = new List<Node>();
 
-        private Sprite sprite;
-        private AnimationPlayer animationPlayer;
-        private ImageTexture openSheetTexture;
-        private ImageTexture lockedSheetTexture;
+        protected Sprite sprite;
+        protected AnimationPlayer animationPlayer;
 
         public override void _Ready()
         {
@@ -85,23 +83,20 @@ namespace OrdinaryObjects
             animationPlayer.Connect("animation_finished", this, "onAnimationFinished");
             animationPlayer.Connect("animation_started", this, "onAnimationStarted");
 
-            // 可操作开关门Area
-            var holdArea = GetNode<Area2D>("HoldArea2D");
-            holdArea.Connect("body_entered", this, "onHoldAreaBodyEntered");
-            holdArea.Connect("body_exited", this, "onHoldAreaBodyExited");
-
-            // 阻挡物检测Area，避免关门之后，造成门的与其它碰撞体交叉产生不自然位移
+            // 阻挡物检测Area，避免关门之后，造成门的碰撞体与其它碰撞体交叉产生问题
             // 同时作为一种游戏机制
             var obstacleArea = GetNode<Area2D>("ObstacleArea2D");
-            obstacleArea.Connect("body_entered", this, "onObstacleAreaBodyEntered");
-            obstacleArea.Connect("body_exited", this, "onObstacleAreaBodyExited");
+            obstacleArea.Connect("body_entered", this, "onObstacleAreaNodeEntered");
+            obstacleArea.Connect("body_exited", this, "onObstacleAreaNodeExited");
 
             preloadSpriteTextures();
             playAnimation();
         }
 
-        public void Open(Node body)
+        public void Open()
         {
+            if (!canOperate()) return;
+
             if (state != State.Closed)
             {
                 Print("不能开门，因为门不是关状态");
@@ -113,26 +108,19 @@ namespace OrdinaryObjects
                 animationPlayer.Play("locked");
                 return;
             }
-            if (!canToggle(body))
-            {
-                Print("无法开门");
-                return;
-            }
+
             Print("开门中");
             state = State.Opening;
             playAnimation();
         }
 
-        public void Close(Node body)
+        public void Close()
         {
+            if (!canOperate()) return;
+
             if (state != State.Opened)
             {
                 Print("不能关门，因为门不是开状态");
-                return;
-            }
-            if (!canToggle(body))
-            {
-                Print("无法关门");
                 return;
             }
             Print("关门中");
@@ -140,8 +128,10 @@ namespace OrdinaryObjects
             playAnimation();
         }
 
-        public void Unlock(Node body, LockKey key)
+        public void Unlock(LockKey key)
         {
+            if (!canOperate()) return;
+
             if (!(state == State.Closed && lockState == LockState.Locked))
                 return;
             if (!itemLock.IsMatched(key))
@@ -149,18 +139,15 @@ namespace OrdinaryObjects
                 Print("不匹配的钥匙");
                 return;
             }
-            if (!canToggle(body))
-            {
-                Print("无法开锁");
-                return;
-            }
             //lockState = LockState.Unlocking;
             lockState = LockState.NotLocked;
             Print("开锁完成");
         }
 
-        public void Lock(Node body, LockKey key)
+        public void Lock(LockKey key)
         {
+            if (!canOperate()) return;
+
             if (!(state == State.Closed && lockState == LockState.NotLocked))
                 return;
             if (!itemLock.IsMatched(key))
@@ -168,49 +155,43 @@ namespace OrdinaryObjects
                 Print("不匹配的钥匙");
                 return;
             }
-            if (!canToggle(body))
-            {
-                Print("无法上门锁");
-                return;
-            }
             //lockState = LockState.Locking;
             lockState = LockState.Locked;
             Print("上锁完成");
         }
 
-        public void Toggle(Node body)
+        public void Toggle()
         {
             switch (state)
             {
                 case State.Closed:
-                    Open(body);
+                    Open();
                     break;
                 case State.Opened:
-                    Close(body);
+                    Close();
                     break;
             }
         }
 
-
-        public void ToggleLock(Node body, LockKey key)
+        public void Toggle(LockKey key)
         {
             switch (lockState)
             {
                 case LockState.NotLocked:
-                    Lock(body, key);
+                    Lock(key);
                     break;
                 case LockState.Locked:
-                    Unlock(body, key);
+                    Unlock(key);
                     break;
             }
         }
 
-        private bool canToggle(Node body)
+        private bool canOperate()
         {
-            return Holders.Contains(body) && obstacleCount == 0;
+            return obstacles.Count == 0;
         }
 
-        private void playAnimation()
+        protected virtual void playAnimation()
         {
             switch (state)
             {
@@ -229,12 +210,7 @@ namespace OrdinaryObjects
             }
         }
 
-        private void preloadSpriteTextures()
-        {
-            string pathPrefix = "user://res/ordinary_objects/animated_door_big";
-            openSheetTexture = Textures.From($"{pathPrefix}_{styleId}_32x32.png");
-            lockedSheetTexture = Textures.From($"{pathPrefix}_{styleId}_locked_32x32.png");
-        }
+        protected abstract void preloadSpriteTextures();
 
         #region 节点事件
         private void onAnimationFinished(string animName)
@@ -253,52 +229,24 @@ namespace OrdinaryObjects
                             Print("关门完成");
                             break;
                     }
+                    playAnimation();
                     break;
             }
         }
 
-        private void onAnimationStarted(string animName)
+        protected virtual void onAnimationStarted(string animName) { }
+
+        private void onObstacleAreaNodeEntered(Node2D node)
         {
-            switch (animName)
+            if (! obstacles.Exists(o => o == node.Owner))
             {
-                case "opening":
-                case "opened":
-                case "closing":
-                case "closed":
-                    sprite.Texture = openSheetTexture;
-                    break;
-                case "locked":
-                    sprite.Texture = lockedSheetTexture;
-                    break;
+                obstacles.Add(node.Owner);
             }
         }
 
-        private void onHoldAreaBodyEntered(Node body)
+        private void onObstacleAreaNodeExited(Node2D node)
         {
-            Holders.Add(body);
-            if (body is Character)
-            {
-                (body as Character).ActionObjects.Add(this);
-            }
-        }
-
-        private void onHoldAreaBodyExited(Node body)
-        {
-            Holders.Remove(body);
-            if (body is Character)
-            {
-                (body as Character).ActionObjects.Remove(this);
-            }
-        }
-
-        private void onObstacleAreaBodyEntered(Node body)
-        {
-            obstacleCount++;
-        }
-
-        private void onObstacleAreaBodyExited(Node body)
-        {
-            obstacleCount--;
+            obstacles.Remove(node.Owner);
         }
         #endregion
     }
