@@ -13,7 +13,7 @@ script = ExtResource( 1 )
 [node name="House1" parent="YSort" instance=ExtResource( 4 )]
 
 [node name="Character" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 384, 192 )
+position = Vector2( 288, 192 )
 InitialDir = 3
 StyleId = "1"
 
@@ -26,3 +26,15 @@ position = Vector2( 194, 160 )
 InitialDir = 0
 InitialState = 1
 StyleId = "2"
+
+[node name="Camera2D" type="Camera2D" parent="YSort/PlayerCharacter"]
+position = Vector2( 0, 8 )
+current = true
+limit_top = 0
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.4
+drag_margin_top = 0.4
+drag_margin_right = 0.4
+drag_margin_bottom = 0.4
+editor_draw_drag_margin = true

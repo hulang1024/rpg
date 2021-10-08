@@ -54,7 +54,7 @@ namespace Tools.CharacterStyleDesigner
             {
                 var item = StyleSelectItem.Instance();
                 item.LoadFrom(await CharacterStyleImageGenerator.GenerateImageTexture(styleInfo.Styles), null);
-                item.onSelect += (selected) =>
+                item.OnSelect += (selected) =>
                 {
                     foreach (var it in gridContainer.GetChildren())
                     {

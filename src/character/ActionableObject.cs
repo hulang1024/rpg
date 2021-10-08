@@ -1,4 +1,4 @@
-public interface ActionableObject
+public interface IActionableObject
 {
     
 }

@@ -8,7 +8,9 @@ namespace Characters
     public class CharacterStyleManager
     {
         private readonly string file_path = $"{OS.GetUserDataDir()}/character_styles.json";
+
         private List<CharacterStyleInfo> allStyles;
+
         public List<CharacterStyleInfo> AllStyles
         {
             get { return allStyles; }
@@ -86,7 +88,7 @@ namespace Characters
             }
             allStyles.Add(styleInfo);
 
-            return Save();
+            return save();
         }
 
         public int Update(string id, CharacterStyleInfo styleInfo)
@@ -107,18 +109,18 @@ namespace Characters
             oldStyleInfo.Tags = styleInfo.Tags;
             oldStyleInfo.Remark = styleInfo.Remark;
 
-            return Save();
+            return save();
         }
 
         public int Delete(string id)
         {
             LoadAll();
             if (allStyles.RemoveAll(t => t.Id == id) > 0)
-                return Save();
+                return save();
             return 1;
         }
 
-        private int Save()
+        private int save()
         {
             var jsonSetting = new JsonSerializerSettings();
             jsonSetting.NullValueHandling = NullValueHandling.Ignore;

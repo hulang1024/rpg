@@ -130,7 +130,7 @@ namespace Tools.CharacterStyleDesigner
                 var item = StyleSelectItem.Instance();
                 item.LoadFrom($"{filePath}", tab.ComponentType);
 
-                item.onSelect = (selected) =>
+                item.OnSelect = (selected) =>
                 {
                     foreach (var it in tab.Panel.GetItems())
                     {

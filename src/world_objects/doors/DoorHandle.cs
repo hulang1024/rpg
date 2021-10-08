@@ -4,7 +4,7 @@ using OrdinaryObjects;
 /// <summary>
 /// 可操作开关门Area
 /// </summary>
-public class DoorHandle : Area2D, ActionableObject
+public class DoorHandle : Area2D, IActionableObject
 {
     private Door door;
 

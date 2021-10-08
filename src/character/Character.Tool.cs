@@ -32,7 +32,7 @@ namespace Characters
             set
             {
                 initialState = value;
-                NowState = value;
+                State = value;
                 if (Engine.EditorHint)
                 {
                     playAnimation();

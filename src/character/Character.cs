@@ -47,19 +47,19 @@ namespace Characters
         private Sprite sprite;
         private AnimationPlayer animationPlayer;
 
-        private State nowState = State.Idle;
-        public State NowState
+        private State state = State.Idle;
+        public State State
         {
             set
             {
-                if (nowState != value)
+                if (state != value)
                 {
-                    oldState = nowState;
-                    nowState = value;
+                    oldState = state;
+                    state = value;
                     onStateChange(value, oldState);
                 }
             }
-            get { return nowState; }
+            get { return state; }
         }
 
         private State oldState = State.Idle;
@@ -86,7 +86,7 @@ namespace Characters
 
         public Inventory Inventory = new Inventory();
 
-        public List<ActionableObject> ActionObjects = new List<ActionableObject>();
+        public List<IActionableObject> ActionObjects = new List<IActionableObject>();
 
         public override void _Ready()
         {
@@ -112,12 +112,12 @@ namespace Characters
             // todo: 下面代码考虑移到Controller
             if (DirInput.x == 0 && DirInput.y == 0)
             {
-                switch (NowState)
+                switch (State)
                 {
                     case State.Idle:
                     case State.Walk:
                     case State.PushCart:
-                        NowState = State.Idle;
+                        State = State.Idle;
                         velocity.x = 0;
                         velocity.y = 0;
                         break;
@@ -125,10 +125,10 @@ namespace Characters
             }
             else
             {
-                switch (NowState)
+                switch (State)
                 {
                     case State.Idle:
-                        NowState = IsTakeCart ? State.PushCart : State.Walk;
+                        State = IsTakeCart ? State.PushCart : State.Walk;
                         updateDir(delta);
                         break;
                     case State.Walk:
@@ -140,7 +140,7 @@ namespace Characters
                         break;
                     case State.GrabGun:
                     case State.IdleGun:
-                        NowState = State.Walk;
+                        State = State.Walk;
                         updateDir(delta);
                         break;
                 }
@@ -188,7 +188,7 @@ namespace Characters
 
         private void playAnimation()
         {
-            switch (NowState)
+            switch (State)
             {
                 case State.Idle:
                     playAnimation("idle");
@@ -287,13 +287,13 @@ namespace Characters
             }
             else if (animName.StartsWith("phone_take_back"))
             {
-                NowState = State.Idle;
+                State = State.Idle;
             }
 
             else if (animName.StartsWith("grab_gun"))
             {
-                if (NowState == State.GrabGun)
-                    NowState = State.IdleGun;
+                if (State == State.GrabGun)
+                    State = State.IdleGun;
             }
             else if (animName.StartsWith("idle_gun"))
             {
@@ -301,12 +301,12 @@ namespace Characters
             }
             else if (animName.StartsWith("shoot"))
             {
-                if (NowState == State.Shoot)
-                    NowState = State.IdleGun;
+                if (State == State.Shoot)
+                    State = State.IdleGun;
             }
             else
             {
-                NowState = State.Idle;
+                State = State.Idle;
             }
         }
     }

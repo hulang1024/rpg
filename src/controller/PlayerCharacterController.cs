@@ -10,10 +10,10 @@ namespace Characters
     {
         private Character character;
         
-        private State NowState
+        private State State
         {
-            get { return character.NowState; }
-            set { character.NowState = value; }
+            get { return character.State; }
+            set { character.State = value; }
         }
 
         public override void _Ready()
@@ -31,24 +31,24 @@ namespace Characters
         {
             if (@event.IsActionPressed("character_sit"))
             {
-                NowState = NowState == State.Sit ? State.Idle : State.Sit;
+                State = State == State.Sit ? State.Idle : State.Sit;
             }
             else if (@event.IsActionPressed("character_phone"))
             {
-                if (NowState == State.Phoning)
+                if (State == State.Phoning)
                 {
                     character.CancelPhoning();
                 }
                 else
                 {
-                    NowState = State.Phoning;
+                    State = State.Phoning;
                     character.phoningState = PhoningState.TakeUp;
                 }
             }
             else if (@event.IsActionPressed("character_pickup"))
             {
                 // todo: 判定是否可以
-                NowState = State.Pickup;
+                State = State.Pickup;
             }
             else if (@event.IsActionPressed("character_take_cart"))
             {
@@ -58,46 +58,46 @@ namespace Characters
             else if (@event.IsActionPressed("character_take_book"))
             {
                 // todo: 翻书页
-                NowState = NowState == State.Reading ? State.Idle : State.Reading;
+                State = State == State.Reading ? State.Idle : State.Reading;
             }
             else if (@event.IsActionPressed("character_gift"))
             {
                 // todo: 判定是否可以
-                NowState = State.Gift;
+                State = State.Gift;
             }
             else if (@event.IsActionPressed("character_lift"))
             {
                 // todo: 判定是否可以
-                NowState = NowState == State.Lift ? State.Idle : State.Lift;
+                State = State == State.Lift ? State.Idle : State.Lift;
             }
             else if (@event.IsActionPressed("character_throw"))
             {
                 // todo: 判定是否可以
-                NowState = State.Throw;
+                State = State.Throw;
             }
             else if (@event.IsActionPressed("character_hit"))
             {
-                switch (NowState)
+                switch (State)
                 {
                     case State.Idle:
-                        NowState = State.Hit;
+                        State = State.Hit;
                         break;
                     case State.IdleGun:
-                        NowState = State.Shoot;
+                        State = State.Shoot;
                         break;
                 }
             }
             else if (@event.IsActionPressed("character_punch"))
             {
-                NowState = State.Punch;
+                State = State.Punch;
             }
             else if (@event.IsActionPressed("character_stab"))
             {
-                NowState = State.Stab;
+                State = State.Stab;
             }
             else if (@event.IsActionPressed("character_grab_gun"))
             {
-                NowState = State.GrabGun;
+                State = State.GrabGun;
             }
             else if (@event.IsActionPressed("gameplay_toggle_door"))
             {

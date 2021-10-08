@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/ordinary_objects/animated_elevator_door_entrance_1_32x32.png" type="Texture" id=1]
-[ext_resource path="res://src/ordinary_objects/doors/auto_doors/elevator_door/ElevatorDoor.cs" type="Script" id=2]
+[ext_resource path="res://assets/world_objects/animated_elevator_door_entrance_1_32x32.png" type="Texture" id=1]
+[ext_resource path="res://src/world_objects/doors/auto_doors/elevator_door/ElevatorDoor.cs" type="Script" id=2]
 
 [sub_resource type="Animation" id=8]
 length = 0.1

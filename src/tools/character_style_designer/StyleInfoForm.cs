@@ -15,6 +15,7 @@ namespace Tools.CharacterStyleDesigner
         public Action OnStyleDepsChanged;
         
         public string StyleId;
+
         private CharacterStyleInfo styleInfo = new CharacterStyleInfo();
         public CharacterStyleInfo StyleInfo
         {
@@ -66,7 +67,9 @@ namespace Tools.CharacterStyleDesigner
         {
             var frameSize = new CharacterFrameSize[]
             {
-                CharacterFrameSize.Medium, CharacterFrameSize.Small, CharacterFrameSize.Mini
+                CharacterFrameSize.Medium,
+                CharacterFrameSize.Small,
+                CharacterFrameSize.Mini
             }[index];
             styleInfo.Styles = new CharacterStyleSpecifics(styleInfo.Styles.IsKid);
             styleInfo.Styles.FrameSize = frameSize;

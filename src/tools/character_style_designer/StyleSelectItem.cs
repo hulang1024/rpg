@@ -6,14 +6,12 @@ namespace Tools.CharacterStyleDesigner
 {
     public class StyleSelectItem : Control
     {
-        public Action<bool> onSelect;
-
+        public Action<bool> OnSelect;
         public Action<Vector2> OnRequestPopupMenu;
 
         public string filePath;
 
         private static PackedScene packedScene = null;
-
         private TextureRect textureRect;
 
         private bool selected;
@@ -24,8 +22,8 @@ namespace Tools.CharacterStyleDesigner
             {
                 if (value != selected)
                 {
-                selected = value;
-                drawSelected(value);
+                    selected = value;
+                    drawSelected(value);
                 }
             }
         }
@@ -87,7 +85,7 @@ namespace Tools.CharacterStyleDesigner
             {
                 selected = !selected;
                 drawSelected(selected);
-                onSelect.Invoke(selected);
+                OnSelect.Invoke(selected);
             }
             else if (buttonEvent.ButtonIndex == (int)ButtonList.Right)
             {

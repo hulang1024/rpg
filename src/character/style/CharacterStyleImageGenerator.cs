@@ -40,10 +40,8 @@ namespace Characters
 
             var task = new Task<Image>(() =>
             {
-                if (string.IsNullOrEmpty(specifics.Body))
-                {
-                    return null;
-                }
+                if (string.IsNullOrEmpty(specifics.Body)) return null;
+
                 var characterImage = new Image();
                 LoadAddComponent.Invoke(characterImage, "Bodies",
                     CharacterStyleComponentType.Body, specifics.Body, false);

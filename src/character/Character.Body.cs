@@ -41,15 +41,15 @@ namespace Characters
         /// <param name="isEntered"></param>
         private void manageActionObject(Node node, bool isEntered)
         {
-            if (node is ActionableObject)
+            if (node is IActionableObject)
             {
                 if (isEntered)
                 {
-                    ActionObjects.Add(node as ActionableObject);
+                    ActionObjects.Add(node as IActionableObject);
                 }
                 else
                 {
-                    ActionObjects.Remove(node as ActionableObject);
+                    ActionObjects.Remove(node as IActionableObject);
                 }
             }
         }

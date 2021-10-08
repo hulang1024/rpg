@@ -12,7 +12,6 @@ namespace Tools.CharacterStyleDesigner
         private CharacterStyleManager styleManager = new CharacterStyleManager();
 
         private StyleInfoForm styleInfoForm;
-
         private TabContainer mainTabs;
         private StyleComponentTabs styleComponentTabs;
         private StyleBrowser styleBrowser;
