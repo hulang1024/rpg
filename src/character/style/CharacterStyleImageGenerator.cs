@@ -6,7 +6,7 @@ namespace Characters
 {
     public class CharacterStyleImageGenerator
     {
-        private const string BASE_PATH = "user://res/character";
+        private const string base_path = "user://res/character";
 
         public static async Task<ImageTexture> GenerateImageTexture(CharacterStyleSpecifics specifics)
         {
@@ -31,7 +31,7 @@ namespace Characters
                         }, t => t == componentType);
                 var dirNameSuffix = isKid ? "_kids" : "";
                 var image = isAdd ? new Image() : dest;
-                image.Load($"{BASE_PATH}/{dirName}{dirNameSuffix}/{frameSizeDirName}/{typeName}.png");
+                image.Load($"{base_path}/{dirName}{dirNameSuffix}/{frameSizeDirName}/{typeName}.png");
                 if (isAdd)
                 {
                     dest.BlendRect(image, new Rect2(Vector2.Zero, image.GetSize()), Vector2.Zero);

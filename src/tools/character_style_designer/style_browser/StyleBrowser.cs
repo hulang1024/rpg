@@ -96,15 +96,15 @@ namespace Tools.CharacterStyleDesigner
                     menu.Visible = false;
                     break;
                 case 1:
-                    onOpenStyleInfo();
+                    OnOpenStyleInfo();
                     break;
                 case 2:
-                    onDeleteItem();
+                    OnDeleteStyleInfo();
                     break;
             }
         }
 
-        public void onOpenStyleInfo()
+        public void OnOpenStyleInfo()
         {
             styleInfoDialog.SetPosition(menu.RectPosition);
             var form = styleInfoDialog.GetNode<Control>("MarginContainer/VBoxContainer");
@@ -118,7 +118,7 @@ namespace Tools.CharacterStyleDesigner
             styleInfoDialog.Visible = true;
         }
 
-        private void onDeleteItem()
+        private void OnDeleteStyleInfo()
         {
             var result = styleManager.Delete(lastMenuTargetItem.Id);
             if (result == 0)

@@ -2,15 +2,11 @@ namespace OrdinaryObjects
 {
     public class ItemLock
     {
-        private string secretId;
-        public string SecretId
-        {
-            get { return secretId; }
-        }
+        public string SecretId { get; }
         
         public ItemLock(string secretId)
         {
-            this.secretId = secretId;
+            SecretId = secretId;
         }
 
         public bool IsMatched(LockKey key)

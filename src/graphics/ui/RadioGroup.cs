@@ -28,11 +28,11 @@ public class RadioGroup : HBoxContainer
         foreach (Button btn in GetChildren())
         {
             btn.Group = group;
-            btn.Connect("pressed", this, "onRadioCheck", new Godot.Collections.Array(btn));
+            btn.Connect("pressed", this, "OnRadioCheck", new Godot.Collections.Array(btn));
         }
     }
 
-    private void onRadioCheck(Button btn)
+    private void OnRadioCheck(Button btn)
     {
         OnChanged.Invoke(btn.Name);
     }

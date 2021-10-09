@@ -9,7 +9,7 @@ namespace OrdinaryObjects
         private ImageTexture openSheetTexture;
         private ImageTexture lockedSheetTexture;
 
-        protected override void playAnimation()
+        protected override void PlayAnimation()
         {
             switch (state)
             {
@@ -28,7 +28,7 @@ namespace OrdinaryObjects
             }
         }
 
-        protected override void preloadSpriteTextures()
+        protected override void PreloadSpriteTextures()
         {
             string pathPrefix = "user://res/ordinary_objects/animated_door_big";
             openSheetTexture = Textures.From($"{pathPrefix}_{styleId}_32x32.png");

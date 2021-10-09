@@ -19,7 +19,7 @@ namespace Tools.CharacterStyleDesigner
         private CharacterStyleInfo styleInfo = new CharacterStyleInfo();
         public CharacterStyleInfo StyleInfo
         {
-            get { return styleInfo; }
+            get => styleInfo;
             set
             {
                 styleInfo = value;

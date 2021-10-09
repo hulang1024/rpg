@@ -44,7 +44,7 @@ public class WallTilemapRegionFilp : TileMap
     [Export]
     public FilpDirEnum FilpDir
     {
-        get { return filpDir; }
+        get => filpDir;
         set
         {
             filpDir = value;

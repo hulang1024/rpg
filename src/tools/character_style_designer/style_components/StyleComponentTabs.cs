@@ -16,15 +16,10 @@ namespace Tools.CharacterStyleDesigner
         class TabInfo
         {
             public string Name;
-
             public StyleComponentTabPanel Panel;
-
             public CharacterStyleComponentType ComponentType;
-
             public string ComponentName;
-
-            public bool hasKidCharacter = true;
-
+            public bool HasKidCharacter = true;
             public bool Loaded;
         }
 
@@ -54,19 +49,19 @@ namespace Tools.CharacterStyleDesigner
                 Name = "手机",
                 ComponentType = CharacterStyleComponentType.Smartphones,
                 ComponentName = "Smartphones",
-                hasKidCharacter = false
+                HasKidCharacter = false
             },
             new TabInfo {
                 Name = "配饰",
                 ComponentType = CharacterStyleComponentType.Accessories,
                 ComponentName = "Accessories",
-                hasKidCharacter = false
+                HasKidCharacter = false
             }
         };
 
         public override void _Ready()
         {
-            Connect("tab_selected", this, "onTabSelected");
+            Connect("tab_selected", this, "OnTabSelected");
         }
 
         public void Load(bool isKid, CharacterFrameSize frameSize, bool isReload = false)
@@ -93,7 +88,7 @@ namespace Tools.CharacterStyleDesigner
                 AddChild(tab.Panel);
             }
 
-            onTabSelected(0);
+            OnTabSelected(0);
         }
 
         public void ClearSelected()
@@ -105,22 +100,22 @@ namespace Tools.CharacterStyleDesigner
             });
         }
 
-        private void onTabSelected(int tabIndex)
+        private void OnTabSelected(int tabIndex)
         {
             var tab = tabs[tabIndex];
             if (tab.Loaded)
                 return;
             new Task(() =>
             {
-                loadStyleComponents(tab);
+                LoadStyleComponents(tab);
             }).Start();
             tab.Loaded = true;
         }
 
-        private void loadStyleComponents(TabInfo tab)
+        private void LoadStyleComponents(TabInfo tab)
         {
             var sizeName = CharacterStyleImageGenerator.GetFrameSizeName(frameSize);
-            var suffix = isLoadKids && tab.hasKidCharacter ? "_kids" : "";
+            var suffix = isLoadKids && tab.HasKidCharacter ? "_kids" : "";
             var dirPath = $"{OS.GetUserDataDir()}/res/character/{tab.ComponentName}{suffix}/{sizeName}";
             string[] filePaths = System.IO.Directory.GetFiles(dirPath, "*.png");
 

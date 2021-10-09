@@ -17,15 +17,22 @@ namespace Tools.CharacterStyleDesigner
         private bool selected;
         public bool Selected
         {
-            get { return selected; }
+            get => selected;
             set
             {
                 if (value != selected)
                 {
                     selected = value;
-                    drawSelected(value);
+                    DrawSelected(value);
                 }
             }
+        }
+
+        public override void _Ready()
+        {
+            Connect("gui_input", this, "OnGuiInput");
+            Connect("mouse_entered", this, "OnMouseHover", new Godot.Collections.Array(true));
+            Connect("mouse_exited", this, "OnMouseHover", new Godot.Collections.Array(false));
         }
 
         public static StyleSelectItem Instance()
@@ -35,13 +42,6 @@ namespace Tools.CharacterStyleDesigner
                 packedScene = GD.Load<PackedScene>("res://src/tools/character_style_designer/StyleSelectItem.tscn");
             }
             return packedScene.Instance<StyleSelectItem>();
-        }
-
-        public override void _Ready()
-        {
-            Connect("gui_input", this, "onGuiInput");
-            Connect("mouse_entered", this, "onMouseHover", new Godot.Collections.Array(true));
-            Connect("mouse_exited", this, "onMouseHover", new Godot.Collections.Array(false));
         }
 
         public void LoadFrom(string filePath, CharacterStyleComponentType? type)
@@ -63,18 +63,18 @@ namespace Tools.CharacterStyleDesigner
             textureRect.Texture = t;
         }
 
-        public void drawSelected(bool selected) {
+        public void DrawSelected(bool selected) {
             var style = (StyleBox)GetStylebox("panel").Duplicate();
             style.Set("border_color", selected ? new Color(0x5a5a5af) : new Color(0x3a3a4f));
             AddStyleboxOverride("panel", style);
         }
 
-        private void onMouseHover(bool entered)
+        private void OnMouseHover(bool entered)
         {
-            drawSelected(entered);
+            DrawSelected(entered);
         }
 
-        private void onGuiInput(InputEvent @event)
+        private void OnGuiInput(InputEvent @event)
         {
             if (!(@event is InputEventMouseButton))
                 return;
@@ -84,7 +84,7 @@ namespace Tools.CharacterStyleDesigner
             if (buttonEvent.ButtonIndex == (int)ButtonList.Left)
             {
                 selected = !selected;
-                drawSelected(selected);
+                DrawSelected(selected);
                 OnSelect.Invoke(selected);
             }
             else if (buttonEvent.ButtonIndex == (int)ButtonList.Right)

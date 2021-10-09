@@ -19,27 +19,27 @@ namespace Tools.CharacterStyleDesigner
         public override void _Ready()
         {
             styleInfoForm = GetNode<StyleInfoForm>("MarginContainer/HBoxContainer/Left/StyleInfoForm");
-            styleInfoForm.OnNew += onNewStyle;
-            styleInfoForm.OnSave += onSaveStyle;
-            styleInfoForm.OnDelete += onDeleteStyle;
-            styleInfoForm.OnModelChanged += onStyleChanged;
-            styleInfoForm.OnStyleDepsChanged += onStyleDepsChanged;
+            styleInfoForm.OnNew += OnNewStyle;
+            styleInfoForm.OnSave += OnSaveStyle;
+            styleInfoForm.OnDelete += OnDeleteStyle;
+            styleInfoForm.OnModelChanged += OnStyleChanged;
+            styleInfoForm.OnStyleDepsChanged += OnStyleDepsChanged;
 
             mainTabs = GetNode<TabContainer>("MarginContainer/HBoxContainer/TabContainer");
         
             styleComponentTabs = mainTabs.GetNode<StyleComponentTabs>("StyleComponentTabs");
             styleComponentTabs.Name = "角色样式设计";
-            styleComponentTabs.OnStyleComponentToggle = onStyleComponentToggle;
+            styleComponentTabs.OnStyleComponentToggle = OnStyleComponentToggle;
             styleComponentTabs.Load(false, CharacterFrameSize.Small);
 
             styleBrowser = mainTabs.GetNode<StyleBrowser>("StyleBrowser");
             styleBrowser.Name = "预制角色样式库";
-            styleBrowser.OnSelect = onStyleBrowserItemSelect;
+            styleBrowser.OnSelect = OnStyleBrowserItemSelect;
 
-            createPreviewCharacters();
+            CreatePreviewCharacters();
         }
 
-        private void createPreviewCharacters()
+        private void CreatePreviewCharacters()
         {
             previewCharacters.Clear();
 
@@ -86,30 +86,30 @@ namespace Tools.CharacterStyleDesigner
             }
         }
 
-        private void updatePreviewCharacterStyle()
+        private void UpdatePreviewCharacterStyle()
         {
             previewCharacters.ForEach(ch => ch.UpdateCharacterStyle(styleInfoForm.StyleInfo.Styles));
         }
 
-        private void onStyleBrowserItemSelect(CharacterStyleInfo styleInfo)
+        private void OnStyleBrowserItemSelect(CharacterStyleInfo styleInfo)
         {
             styleInfoForm.StyleInfo = styleInfo;
         }
 
-        private void onStyleChanged()
+        private void OnStyleChanged()
         {
-            updatePreviewCharacterStyle();
+            UpdatePreviewCharacterStyle();
         }
 
-        private void onStyleDepsChanged()
+        private void OnStyleDepsChanged()
         {
             var styles = styleInfoForm.StyleInfo.Styles;
-            createPreviewCharacters();
-            updatePreviewCharacterStyle();
+            CreatePreviewCharacters();
+            UpdatePreviewCharacterStyle();
             styleComponentTabs.Load(styles.IsKid, styles.FrameSize, true);
         }
 
-        private void onStyleComponentToggle(CharacterStyleComponentType type, string filePath, bool selected)
+        private void OnStyleComponentToggle(CharacterStyleComponentType type, string filePath, bool selected)
         {
             string typeName = null;
             if (selected)
@@ -140,17 +140,17 @@ namespace Tools.CharacterStyleDesigner
                     styles.Accessories = typeName;
                     break;
             }
-            updatePreviewCharacterStyle();
+            UpdatePreviewCharacterStyle();
             styleInfoForm.Message.Text = "";
         }
 
-        private void onNewStyle()
+        private void OnNewStyle()
         {
             styleComponentTabs.ClearSelected();
             mainTabs.CurrentTab = 0;
         }
 
-        private void onSaveStyle(CharacterStyleInfo styleInfo, string styleId)
+        private void OnSaveStyle(CharacterStyleInfo styleInfo, string styleId)
         {
             var isAdd = styleId == null;
             
@@ -179,7 +179,7 @@ namespace Tools.CharacterStyleDesigner
             }
         }
 
-        private void onDeleteStyle(string styleId)
+        private void OnDeleteStyle(string styleId)
         {
             var result = styleManager.Delete(styleId);
             if (result == 0)

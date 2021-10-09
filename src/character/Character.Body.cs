@@ -5,33 +5,33 @@ namespace Characters
 {
     public partial class Character
     {
-        private void initBody()
+        private void InitBody()
         {
             var bodyArea = GetNode<Area2D>("BodyArea");
-            bodyArea.Connect("area_entered", this, "onBodyAreaAreaEntered");
-            bodyArea.Connect("area_exited", this, "onBodyAreaAreaExited");
-            bodyArea.Connect("body_entered", this, "onBodyAreaBodyEntered");
-            bodyArea.Connect("body_exited", this, "onBodyAreaBodyExited");
+            bodyArea.Connect("area_entered", this, "OnBodyAreaAreaEntered");
+            bodyArea.Connect("area_exited", this, "OnBodyAreaAreaExited");
+            bodyArea.Connect("body_entered", this, "OnBodyAreaBodyEntered");
+            bodyArea.Connect("body_exited", this, "OnBodyAreaBodyExited");
         }
 
-        private void onBodyAreaAreaEntered(Node area)
+        private void OnBodyAreaAreaEntered(Node area)
         {
-            manageActionObject(area, true);
+            ManageActionObject(area, true);
         }
 
-        private void onBodyAreaAreaExited(Node area)
+        private void OnBodyAreaAreaExited(Node area)
         {
-            manageActionObject(area, false);
+            ManageActionObject(area, false);
         }
 
-        private void onBodyAreaBodyEntered(Node body)
+        private void OnBodyAreaBodyEntered(Node body)
         {
-            manageActionObject(body, true);
+            ManageActionObject(body, true);
         }
 
-        private void onBodyAreaBodyExited(Node body)
+        private void OnBodyAreaBodyExited(Node body)
         {
-            manageActionObject(body, false);
+            ManageActionObject(body, false);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Characters
         /// </summary>
         /// <param name="node"></param>
         /// <param name="isEntered"></param>
-        private void manageActionObject(Node node, bool isEntered)
+        private void ManageActionObject(Node node, bool isEntered)
         {
             if (node is IActionableObject)
             {

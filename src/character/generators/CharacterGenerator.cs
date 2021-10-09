@@ -6,16 +6,11 @@ namespace Characters
 {
     public class CharacterGenerator
     {
-        private static PackedScene characterTemplate = null;
+        private static readonly PackedScene characterPackedScene = Load<PackedScene>("res://src/character/Character.tscn");
 
         public static Character Generate()
         {
-            if (characterTemplate == null)
-            {
-                characterTemplate = Load<PackedScene>("res://src/character/Character.tscn");
-            }
-
-            return characterTemplate.Instance<Character>();
+            return characterPackedScene.Instance<Character>();
         }
 
         public static async Task<Character> Generate(CharacterStyleSpecifics specifics)

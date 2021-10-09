@@ -9,12 +9,7 @@ namespace Characters
     {
         private readonly string file_path = $"{OS.GetUserDataDir()}/character_styles.json";
 
-        private List<CharacterStyleInfo> allStyles;
-
-        public List<CharacterStyleInfo> AllStyles
-        {
-            get { return allStyles; }
-        }
+        public List<CharacterStyleInfo> AllStyles { get; private set; }
 
         private bool loaded = false;
 
@@ -26,13 +21,13 @@ namespace Characters
             {
                 reader = System.IO.File.OpenText(file_path);
                 string json = reader.ReadToEnd();
-                allStyles = JsonConvert.DeserializeObject<List<CharacterStyleInfo>>(json);
+                AllStyles = JsonConvert.DeserializeObject<List<CharacterStyleInfo>>(json);
                 loaded = true;
                 return 0;
             }
             catch (System.IO.FileNotFoundException)
             {
-                allStyles = new List<CharacterStyleInfo>();
+                AllStyles = new List<CharacterStyleInfo>();
                 return 1;
             }
             finally
@@ -44,13 +39,13 @@ namespace Characters
         public CharacterStyleInfo FindById(string id)
         {
             LoadAll(false);
-            return allStyles.Find(item => item.Id == id);
+            return AllStyles.Find(item => item.Id == id);
         }
 
         public List<CharacterStyleInfo> Search(CharacterStyleSearchParam param)
         {
             LoadAll();
-            var items = allStyles;
+            var items = AllStyles;
             if (param.Gender != null)
             {
                 items = items.FindAll(item => item.Gender == param.Gender);
@@ -69,7 +64,7 @@ namespace Characters
         public int Add(CharacterStyleInfo styleInfo)
         {
             LoadAll();
-            if (allStyles.Exists(ch => ch.Equals(styleInfo)))
+            if (AllStyles.Exists(ch => ch.Equals(styleInfo)))
             {
                 return 2;
             }
@@ -82,11 +77,11 @@ namespace Characters
                 return 4;
             }
 
-            if (allStyles.Exists(ch => ch.Id == styleInfo.Id))
+            if (AllStyles.Exists(ch => ch.Id == styleInfo.Id))
             {
                 return 3;
             }
-            allStyles.Add(styleInfo);
+            AllStyles.Add(styleInfo);
 
             return save();
         }
@@ -94,7 +89,7 @@ namespace Characters
         public int Update(string id, CharacterStyleInfo styleInfo)
         {
             LoadAll();
-            var oldStyleInfo = allStyles.Find(ch => ch.Id == id);
+            var oldStyleInfo = AllStyles.Find(ch => ch.Id == id);
             if (oldStyleInfo == null)
                 return 1;
             if (id != styleInfo.Id)
@@ -115,18 +110,20 @@ namespace Characters
         public int Delete(string id)
         {
             LoadAll();
-            if (allStyles.RemoveAll(t => t.Id == id) > 0)
+            if (AllStyles.RemoveAll(t => t.Id == id) > 0)
                 return save();
             return 1;
         }
 
         private int save()
         {
-            var jsonSetting = new JsonSerializerSettings();
-            jsonSetting.NullValueHandling = NullValueHandling.Ignore;
-            jsonSetting.Formatting = Formatting.Indented;
-            var json = JsonConvert.SerializeObject(allStyles, jsonSetting);
+            var jsonifySetting = new JsonSerializerSettings();
+            jsonifySetting.NullValueHandling = NullValueHandling.Ignore;
+            jsonifySetting.Formatting = Formatting.Indented;
+
+            var json = JsonConvert.SerializeObject(AllStyles, jsonifySetting);
             System.IO.File.WriteAllText(file_path, json);
+
             return 0;
         }
     }

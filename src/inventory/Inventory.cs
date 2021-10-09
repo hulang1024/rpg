@@ -4,6 +4,6 @@ namespace InventorySystem
 {
     public class Inventory
     {
-        public List<InventoryItem> Items = new List<InventoryItem>();
+        public List<InventoryItem> Items { get; } = new List<InventoryItem>();
     }
 }

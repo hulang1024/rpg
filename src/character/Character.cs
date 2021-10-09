@@ -43,34 +43,32 @@ namespace Characters
         private readonly string[] dir_names = new string[4] { "right", "up", "left", "down" };
         // 一个完整的跨步动画需要多久
         private const int step_max_duration = 300;
-    
-        private Sprite sprite;
-        private AnimationPlayer animationPlayer;
 
         private State state = State.Idle;
         public State State
         {
-            set
+            internal set
             {
                 if (state != value)
                 {
                     oldState = state;
                     state = value;
-                    onStateChange(value, oldState);
+                    // Print(string.Format("{0,8} -> {1}", oldState, nowState));
                 }
             }
-            get { return state; }
+            get => state;
         }
 
         private State oldState = State.Idle;
 
-        private Dir dir = Dir.Down;
+        public Dir Dir { get; private set; } = Dir.Down;
 
         public float walkSpeed;
         public float WalkSpeed
         {
-            get { return walkSpeed; }
-            set {
+            get => walkSpeed;
+            set
+            {
                 walkSpeed = value;
                 animationPlayer.PlaybackSpeed = value;
             }
@@ -78,21 +76,26 @@ namespace Characters
         // 步长
         private int stepLength = 32;
 
-        public Vector2 DirInput = Vector2.Zero;
-        public PhoningState phoningState;
-        public bool IsTakeCart = false;
+        public Vector2 DirInput { get; } = Vector2.Zero;
+
+        internal PhoningState phoningState;
+
+        internal bool IsTakeCart = false;
 
         private Vector2 velocity = Vector2.Zero;
 
-        public Inventory Inventory = new Inventory();
+        public Inventory Inventory { get; } = new Inventory();
 
-        public List<IActionableObject> ActionObjects = new List<IActionableObject>();
+        public List<IActionableObject> ActionObjects { get; } = new List<IActionableObject>();
+
+        private Sprite sprite;
+        private AnimationPlayer animationPlayer;
 
         public override void _Ready()
         {
             sprite = GetNode<Sprite>("Sprite");
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-            initBody();
+            InitBody();
             LoadCharacterStyle();
             WalkSpeed = 1f;
         }
@@ -105,7 +108,7 @@ namespace Characters
             }
             else if (Preview)
             {
-                playAnimation();
+                PlayAnimation();
                 return;
             }
 
@@ -129,11 +132,11 @@ namespace Characters
                 {
                     case State.Idle:
                         State = IsTakeCart ? State.PushCart : State.Walk;
-                        updateDir(delta);
+                        UpdateDir(delta);
                         break;
                     case State.Walk:
                     case State.PushCart:
-                        updateDir(delta);
+                        UpdateDir(delta);
                         break;
                     case State.Phoning:
                         CancelPhoning();
@@ -141,24 +144,24 @@ namespace Characters
                     case State.GrabGun:
                     case State.IdleGun:
                         State = State.Walk;
-                        updateDir(delta);
+                        UpdateDir(delta);
                         break;
                 }
             }
 
-            playAnimation();
+            PlayAnimation();
         }
 
-        private void updateDir(float delta)
+        private void UpdateDir(float delta)
         {
             if (DirInput.x > 0)
-                dir = Dir.Right;
+                Dir = Dir.Right;
             else if (DirInput.x < 0)
-                dir = Dir.Left;
+                Dir = Dir.Left;
             else if (DirInput.y > 0)
-                dir = Dir.Down;
+                Dir = Dir.Down;
             else if (DirInput.y < 0)
-                dir = Dir.Up;
+                Dir = Dir.Up;
 
             var unit = delta*1000 / (step_max_duration / WalkSpeed) * stepLength;
             velocity.x = DirInput.x * unit;
@@ -181,93 +184,88 @@ namespace Characters
             }
         }
 
-        private void onStateChange(State nowState, State oldState)
-        {
-            // Print(string.Format("{0,8} -> {1}", oldState, nowState));
-        }
-
-        private void playAnimation()
+        private void PlayAnimation()
         {
             switch (State)
             {
                 case State.Idle:
-                    playAnimation("idle");
+                    PlayAnimation("idle");
                     break;
                 case State.Walk:
-                    playAnimation("walk");
+                    PlayAnimation("walk");
                     break;
                 case State.Sleep:
-                    playAnimation("sleep");
+                    PlayAnimation("sleep");
                     break;
                 case State.Sit:
-                    if (dir == Dir.Left || dir == Dir.Right)
-                        playAnimation("sit");
+                    if (Dir == Dir.Left || Dir == Dir.Right)
+                        PlayAnimation("sit");
                     break;
                 case State.Phoning:
-                    playPhoningAnimation();
+                    PlayPhoningAnimation();
                     break;
                 case State.Pickup:
-                    playAnimation("pickup");
+                    PlayAnimation("pickup");
                     break;
                 case State.PushCart:
-                    playAnimation("push_cart");
+                    PlayAnimation("push_cart");
                     break;
                 case State.Reading:
-                    playAnimation("reading", false);
+                    PlayAnimation("reading", false);
                     break;
                 case State.Gift:
-                    playAnimation("gift");
+                    PlayAnimation("gift");
                     break;
                 case State.Lift:
-                    playAnimation("lift");
+                    PlayAnimation("lift");
                     break;
                 case State.Throw:
-                    playAnimation("throw");
+                    PlayAnimation("throw");
                     break;
                 case State.Hit:
-                    playAnimation("hit");
+                    PlayAnimation("hit");
                     break;
                 case State.Punch:
-                    playAnimation("punch");
+                    PlayAnimation("punch");
                     break;
                 case State.Stab:
-                    playAnimation("stab");
+                    PlayAnimation("stab");
                     break;
                 case State.GrabGun:
-                    playAnimation("grab_gun");
+                    PlayAnimation("grab_gun");
                     break;
                 case State.IdleGun:
-                    playAnimation("idle_gun");
+                    PlayAnimation("idle_gun");
                     break;
                 case State.Shoot:
-                    playAnimation("shoot");
+                    PlayAnimation("shoot");
                     break;
                 case State.Hurt:
-                    playAnimation("hurt");
+                    PlayAnimation("hurt");
                     break;
             }
         }
 
-        private void playPhoningAnimation()
+        private void PlayPhoningAnimation()
         {
             switch (phoningState)
             {
                 case PhoningState.TakeUp:
-                    playAnimation("phone_take_up", false);
+                    PlayAnimation("phone_take_up", false);
                     break;
                 case PhoningState.Check:
-                    playAnimation("phone_check", false);
+                    PlayAnimation("phone_check", false);
                     break;
                 case PhoningState.TakeBack:
-                    playAnimation("phone_take_back", false);
+                    PlayAnimation("phone_take_back", false);
                     break;
             }
         }
 
-        private void playAnimation(string animName, bool hasDir = true)
+        private void PlayAnimation(string animName, bool hasDir = true)
         {
             animationPlayer.Play(
-                string.Format("{0}{1}", animName, hasDir ? $"_{dir_names[(int)dir]}" : ""));
+                string.Format("{0}{1}", animName, hasDir ? $"_{dir_names[(int)Dir]}" : ""));
         }
 
         public void On_AnimationPlayer_animation_finished(string animName)

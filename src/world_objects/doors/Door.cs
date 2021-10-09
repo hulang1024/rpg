@@ -13,7 +13,7 @@ namespace OrdinaryObjects
         [Export]
         public State NowState
         {
-            get { return state; }
+            get => state;
             set
             {
                 state = value;
@@ -24,7 +24,7 @@ namespace OrdinaryObjects
                 if (Engine.EditorHint)
                 {
                     PropertyListChangedNotify();
-                    playAnimation();
+                    PlayAnimation();
                 }
             }
         }
@@ -33,7 +33,7 @@ namespace OrdinaryObjects
         [Export]
         public LockState NowLockState
         {
-            get { return lockState; }
+            get => lockState;
             set
             {
                 lockState = value;
@@ -44,7 +44,7 @@ namespace OrdinaryObjects
                 if (Engine.EditorHint)
                 {
                     PropertyListChangedNotify();
-                    playAnimation();
+                    PlayAnimation();
                 }
             }
         }
@@ -59,11 +59,11 @@ namespace OrdinaryObjects
                 styleId = value;
                 if (sprite != null)
                 {
-                    preloadSpriteTextures();
+                    PreloadSpriteTextures();
                 }
                 if (Engine.EditorHint)
                 {
-                    playAnimation();
+                    PlayAnimation();
                 }
             }
         }
@@ -80,22 +80,22 @@ namespace OrdinaryObjects
             sprite = GetNode<Sprite>("Sprite");
 
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-            animationPlayer.Connect("animation_finished", this, "onAnimationFinished");
-            animationPlayer.Connect("animation_started", this, "onAnimationStarted");
+            animationPlayer.Connect("animation_finished", this, "OnAnimationFinished");
+            animationPlayer.Connect("animation_started", this, "OnAnimationStarted");
 
             // 阻挡物检测Area，避免关门之后，造成门的碰撞体与其它碰撞体交叉产生问题
             // 同时作为一种游戏机制
             var obstacleArea = GetNode<Area2D>("ObstacleArea2D");
-            obstacleArea.Connect("body_entered", this, "onObstacleAreaNodeEntered");
-            obstacleArea.Connect("body_exited", this, "onObstacleAreaNodeExited");
+            obstacleArea.Connect("body_entered", this, "OnObstacleAreaNodeEntered");
+            obstacleArea.Connect("body_exited", this, "OnObstacleAreaNodeExited");
 
-            preloadSpriteTextures();
-            playAnimation();
+            PreloadSpriteTextures();
+            PlayAnimation();
         }
 
         public void Open()
         {
-            if (!canOperate()) return;
+            if (!CanOperate()) return;
 
             if (state != State.Closed)
             {
@@ -111,12 +111,12 @@ namespace OrdinaryObjects
 
             Print("开门中");
             state = State.Opening;
-            playAnimation();
+            PlayAnimation();
         }
 
         public void Close()
         {
-            if (!canOperate()) return;
+            if (!CanOperate()) return;
 
             if (state != State.Opened)
             {
@@ -125,12 +125,12 @@ namespace OrdinaryObjects
             }
             Print("关门中");
             state = State.Closing;
-            playAnimation();
+            PlayAnimation();
         }
 
         public void Unlock(LockKey key)
         {
-            if (!canOperate()) return;
+            if (!CanOperate()) return;
 
             if (!(state == State.Closed && lockState == LockState.Locked))
                 return;
@@ -146,7 +146,7 @@ namespace OrdinaryObjects
 
         public void Lock(LockKey key)
         {
-            if (!canOperate()) return;
+            if (!CanOperate()) return;
 
             if (!(state == State.Closed && lockState == LockState.NotLocked))
                 return;
@@ -186,12 +186,12 @@ namespace OrdinaryObjects
             }
         }
 
-        private bool canOperate()
+        private bool CanOperate()
         {
             return obstacles.Count == 0;
         }
 
-        protected virtual void playAnimation()
+        protected virtual void PlayAnimation()
         {
             switch (state)
             {
@@ -210,10 +210,10 @@ namespace OrdinaryObjects
             }
         }
 
-        protected abstract void preloadSpriteTextures();
+        protected abstract void PreloadSpriteTextures();
 
         #region 节点事件
-        private void onAnimationFinished(string animName)
+        private void OnAnimationFinished(string animName)
         {
             switch (animName)
             {
@@ -229,14 +229,14 @@ namespace OrdinaryObjects
                             Print("关门完成");
                             break;
                     }
-                    playAnimation();
+                    PlayAnimation();
                     break;
             }
         }
 
-        protected virtual void onAnimationStarted(string animName) { }
+        protected virtual void OnAnimationStarted(string animName) { }
 
-        private void onObstacleAreaNodeEntered(Node2D node)
+        private void OnObstacleAreaNodeEntered(Node2D node)
         {
             if (! obstacles.Exists(o => o == node.Owner))
             {
@@ -244,7 +244,7 @@ namespace OrdinaryObjects
             }
         }
 
-        private void onObstacleAreaNodeExited(Node2D node)
+        private void OnObstacleAreaNodeExited(Node2D node)
         {
             obstacles.Remove(node.Owner);
         }

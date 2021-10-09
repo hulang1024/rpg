@@ -12,14 +12,14 @@ namespace Characters
         [Export]
         public Dir InitialDir
         {
-            get { return initialDir; }
+            get => initialDir;
             set
             {
                 initialDir = value;
-                dir = value;
-                if (Engine.EditorHint)
+                if (Engine.EditorHint || Preview)
                 {
-                    playAnimation();
+                    Dir = value;
+                    PlayAnimation();
                 }
             }
         }
@@ -28,14 +28,14 @@ namespace Characters
         [Export]
         public State InitialState
         {
-            get { return initialState; }
+            get => initialState;
             set
             {
                 initialState = value;
-                State = value;
-                if (Engine.EditorHint)
+                if (Engine.EditorHint || Preview)
                 {
-                    playAnimation();
+                    State = value;
+                    PlayAnimation();
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace Characters
         [Export]
         public string StyleId
         {
-            get { return styleId; }
+            get => styleId;
             set
             {
                 styleId = value;
@@ -84,7 +84,7 @@ namespace Characters
             var sheetTexture = await CharacterStyleImageGenerator.GenerateImageTexture(styleSpecifics);
             animationPlayer.Stop(false);
             sprite.Texture = sheetTexture;
-            playAnimation();
+            PlayAnimation();
         }
     }
 }

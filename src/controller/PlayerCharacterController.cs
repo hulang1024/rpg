@@ -12,8 +12,8 @@ namespace Characters
         
         private State State
         {
-            get { return character.State; }
-            set { character.State = value; }
+            get => character.State;
+            set => character.State = value;
         }
 
         public override void _Ready()
